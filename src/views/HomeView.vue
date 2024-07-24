@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import gsap from "gsap";
 
 const tasks = ref(["Learn HTML", "Learn CSS", "Learn JavaScript"]);
 const newTask = ref("");
@@ -16,11 +17,20 @@ function removeTask(index) {
 	tasks.value.splice(index, 1);
 }
 
-function beforeEnter() {
-	console.log("Before Enter");
+function beforeEnter(el) {
+	el.style.opacity = 0;
+	el.style.transform = "translateX(-30px)";
 }
-function enter() {
-	console.log("Entering");
+function enter(el) {
+	// el.style.transition = "all 1s ease";
+	// el.style.opacity = 1;
+	// el.style.transform = "translateX(0)";
+	gsap.to(el, {
+		opacity: 1,
+		x: 0,
+		duration: 0.5,
+		delay: el.dataset.index * 0.3,
+	});
 }
 function afterEnter() {
 	console.log("After Enter");
@@ -54,8 +64,9 @@ function afterLeave() {
 			>
 				<div
 					class="card-list"
-					v-for="task in tasks"
+					v-for="(task, index) in tasks"
 					:key="task"
+					:data-index="index"
 					@click="removeTask(tasks.indexOf(task))"
 				>
 					{{ task }}
@@ -90,7 +101,7 @@ function afterLeave() {
 	cursor: pointer;
 }
 
-.list-enter-from {
+/* .list-enter-from {
 	opacity: 0;
 	transform: scale(0.6);
 }
@@ -102,7 +113,7 @@ function afterLeave() {
 
 .list-enter-active {
 	transition: all 0.5s ease;
-}
+} */
 
 .list-leave-from {
 	opacity: 1;
