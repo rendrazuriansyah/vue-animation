@@ -42,13 +42,9 @@ function removeTask(index) {
 </template>
 
 <style scoped>
-/* * {
-	border: 1px solid red;
-} */
-
 .container {
 	max-width: 300px;
-	margin: 0 auto;
+	margin: 20px auto;
 }
 
 .container input {
