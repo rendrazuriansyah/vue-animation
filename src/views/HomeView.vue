@@ -1,14 +1,39 @@
 <script setup>
 import { ref } from "vue";
+
+const tasks = ref(["Learn HTML", "Learn CSS", "Learn JavaScript"]);
+const newTask = ref("");
+
+function addTask() {
+	if (newTask.value) {
+		tasks.value.unshift(newTask.value);
+		newTask.value = "";
+	}
+}
+
+function removeTask(task) {
+	tasks.value = tasks.value.filter((t) => t !== task);
+}
 </script>
 
 <template>
 	<main>
 		<div class="container">
-			<input type="text" autofocus />
-			<div class="card-list">Task 1</div>
-			<div class="card-list">Task 2</div>
-			<div class="card-list">Task 3</div>
+			<input
+				type="text"
+				autofocus
+				v-model="newTask"
+				@keyup.enter="addTask(newTask)"
+				placeholder="Enter task"
+			/>
+			<div
+				class="card-list"
+				v-for="task in tasks"
+				:key="task"
+				@click="removeTask(task)"
+			>
+				{{ task }}
+			</div>
 		</div>
 	</main>
 </template>
