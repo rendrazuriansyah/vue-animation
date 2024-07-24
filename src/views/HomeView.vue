@@ -15,6 +15,22 @@ function removeTask(index) {
 	// tasks.value = tasks.value.filter((t) => t !== task);
 	tasks.value.splice(index, 1);
 }
+
+function beforeEnter() {
+	console.log("Before Enter");
+}
+function enter() {
+	console.log("Entering");
+}
+function afterEnter() {
+	console.log("After Enter");
+}
+function beforeLeave() {
+	console.log("Before Leave");
+}
+function afterLeave() {
+	console.log("After Leave");
+}
 </script>
 
 <template>
@@ -27,7 +43,15 @@ function removeTask(index) {
 				@keyup.enter="addTask(newTask)"
 				placeholder="Enter task"
 			/>
-			<TransitionGroup name="list">
+			<TransitionGroup
+				name="list"
+				appear
+				@before-enter="beforeEnter"
+				@enter="enter"
+				@after-enter="afterEnter"
+				@before-leave="beforeLeave"
+				@after-leave="afterLeave"
+			>
 				<div
 					class="card-list"
 					v-for="task in tasks"
